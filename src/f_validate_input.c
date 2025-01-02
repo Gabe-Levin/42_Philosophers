@@ -6,7 +6,7 @@
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 13:17:52 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/02 13:29:02 by glevin           ###   ########.fr       */
+/*   Updated: 2025/01/02 13:51:59 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	f_validate_input(t_sim *sim)
 		printf(INVALID_INPUT);
 		return (1);
 	}
-	if (sim->num_meals == -1 || sim->num_philos <= 1 || sim->num_philos > 200)
+	if (sim->num_meals == -1 || sim->num_philos < 1 || sim->num_philos > 200)
 	{
 		printf(INVALID_INPUT);
 		return (1);

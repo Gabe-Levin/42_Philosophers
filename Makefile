@@ -1,6 +1,6 @@
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g -pthread
 RM			= rm -f
 
 # Directories
@@ -15,9 +15,12 @@ SRCS		= $(SRC_DIR)main.c \
 			  $(SRC_DIR)f_init_philos.c \
 			  $(SRC_DIR)f_destroy_forks.c \
 			  $(SRC_DIR)f_create_threads.c \
-			  $(SRC_DIR)f_utils.c \
 			  $(SRC_DIR)f_monitor_philos.c\
 			  $(SRC_DIR)f_philo_routine.c\
+			  $(SRC_DIR)f_print_status.c\
+			  $(SRC_DIR)f_get_time.c\
+			  $(SRC_DIR)f_take_forks.c\
+			  $(SRC_DIR)f_release_forks.c\
 			  $(SRC_DIR)f_validate_input.c
 
 
@@ -31,13 +34,17 @@ all:		$(OBJ_DIR) $(NAME)
 
 $(OBJ_DIR):
 			mkdir -p $(OBJ_DIR)
-
+	
 # Compilation rule
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 			$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 $(NAME):	$(OBJS)
 			$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+debug: CFLAGS += -g3 -fsanitize=thread
+debug: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -ldl -o $(NAME)
 
 clean:
 			$(RM) -r $(OBJ_DIR)

@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_utils.c                                          :+:      :+:    :+:   */
+/*   f_release_forks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/01 14:42:01 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/02 12:16:02 by glevin           ###   ########.fr       */
+/*   Created: 2025/01/02 16:00:19 by glevin            #+#    #+#             */
+/*   Updated: 2025/01/02 16:01:16 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-long long	f_get_time(void)
+void	f_release_forks(t_philo *philo)
 {
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-void	f_print_status(t_philo *philo, char *status)
-{
-	if (!philo->sim->stop)
-		printf("%lld %d %s\n", f_get_time() - philo->sim->start_time, philo->id,
-			status);
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
 }

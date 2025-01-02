@@ -6,7 +6,7 @@
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 10:55:15 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/02 13:38:46 by glevin           ###   ########.fr       */
+/*   Updated: 2025/01/02 17:41:44 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_philo
 	long			meal_cnt;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	state_mutex;
 	struct s_sim	*sim;
 	long			last_meal_time;
 }					t_philo;
@@ -65,6 +66,8 @@ typedef struct s_sim
 	long			num_meals;
 	long			start_time;
 	bool			stop;
+	pthread_mutex_t	*print_mutex;
+	pthread_mutex_t	*stop_mutex;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
 }					t_sim;
@@ -83,5 +86,7 @@ int					f_create_threads(t_sim *sim);
 void				f_monitor_philosophers(t_sim *sim);
 void				f_destroy_threads(t_sim *sim);
 int					f_validate_input(t_sim *sim);
+void				f_take_forks(t_philo *philo);
+void				f_release_forks(t_philo *philo);
 
 #endif
