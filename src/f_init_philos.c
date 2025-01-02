@@ -6,20 +6,23 @@
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:56:42 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/01 15:09:46 by glevin           ###   ########.fr       */
+/*   Updated: 2025/01/02 13:41:15 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	f_init_philos(t_sim *sim)
+int	f_init_philos(t_sim *sim)
 {
 	t_philo	*philos;
 	int		i;
 
 	philos = malloc(sizeof(t_philo) * sim->num_philos);
 	if (!philos)
-		return ;
+	{
+		f_destroy_forks(sim);
+		return (1);
+	}
 	i = -1;
 	while (++i < sim->num_philos)
 	{
@@ -31,4 +34,5 @@ void	f_init_philos(t_sim *sim)
 		philos[i].last_meal_time = 0;
 	}
 	sim->philos = philos;
+	return (0);
 }

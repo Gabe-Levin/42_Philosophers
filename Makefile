@@ -17,7 +17,9 @@ SRCS		= $(SRC_DIR)main.c \
 			  $(SRC_DIR)f_create_threads.c \
 			  $(SRC_DIR)f_utils.c \
 			  $(SRC_DIR)f_monitor_philos.c\
-			  $(SRC_DIR)f_philo_routine.c
+			  $(SRC_DIR)f_philo_routine.c\
+			  $(SRC_DIR)f_validate_input.c
+
 
 # Object files
 OBJS		= $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

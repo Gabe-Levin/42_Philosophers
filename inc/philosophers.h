@@ -6,7 +6,7 @@
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 10:55:15 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/01 15:34:21 by glevin           ###   ########.fr       */
+/*   Updated: 2025/01/02 13:38:46 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include <limits.h>
 # include <pthread.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-# include <stdbool.h>
 
 /*
  *  ANSI Sequences for Bold Colors
@@ -37,9 +37,11 @@
 /*
  *  Messages
  */
-# define MAXINT_ERROR B_RED "Error: TOO BIG DUMMY" RESET
-# define WRONG_INPUT_NUMBER B_RED "Error: INVALID # OF INPUTS DUMMY" RESET
-# define MUTEX_INIT_FAIL B_RED "Error: Mutex initialization failed\n" RESET
+# define MAXINT_ERROR "Error: TOO BIG DUMMY\n"
+# define WRONG_INPUT_NUMBER "Error: Invalid # of inputs dummy\n"
+# define INVALID_INPUT "Error: Invalid inputs dummy\n"
+# define MUTEX_INIT_FAIL "Error: Mutex initialization failed\n"
+
 /*
  *  Structs
  */
@@ -59,7 +61,9 @@ typedef struct s_sim
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
+	long			min_time_to_think;
 	long			num_meals;
+	long			start_time;
 	bool			stop;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
@@ -69,8 +73,8 @@ typedef struct s_sim
  *  Prototypes
  */
 void				*f_philo_routine(void *arg);
-void				f_init_philos(t_sim *sim);
-void				f_init_sim(char **av, t_sim *sim);
+int					f_init_philos(t_sim *sim);
+int					f_init_sim(char **av, t_sim *sim);
 int					f_init_forks(t_sim *sim);
 void				f_destroy_forks(t_sim *sim);
 long long			f_get_time(void);
@@ -78,4 +82,6 @@ void				f_print_status(t_philo *philo, char *status);
 int					f_create_threads(t_sim *sim);
 void				f_monitor_philosophers(t_sim *sim);
 void				f_destroy_threads(t_sim *sim);
+int					f_validate_input(t_sim *sim);
+
 #endif

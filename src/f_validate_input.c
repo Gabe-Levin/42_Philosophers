@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_init_forks.c                                     :+:      :+:    :+:   */
+/*   f_validate_input.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 17:50:51 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/02 12:37:27 by glevin           ###   ########.fr       */
+/*   Created: 2025/01/02 13:17:52 by glevin            #+#    #+#             */
+/*   Updated: 2025/01/02 13:29:02 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	f_init_forks(t_sim *sim)
+int	f_validate_input(t_sim *sim)
 {
-	int	i;
-
-	sim->forks = malloc(sizeof(pthread_mutex_t) * sim->num_philos);
-	if (!sim->forks)
-		return (1);
-	i = -1;
-	while (++i < sim->num_philos)
+	if (sim->time_to_die == -1 || sim->time_to_die < 60)
 	{
-		if (pthread_mutex_init(&sim->forks[i], NULL) != 0)
-		{
-			printf(MUTEX_INIT_FAIL);
-			return (1);
-		}
+		printf(INVALID_INPUT);
+		return (1);
+	}
+	if (sim->time_to_eat == -1 || sim->time_to_eat < 60)
+	{
+		printf(INVALID_INPUT);
+		return (1);
+	}
+	if (sim->time_to_sleep == -1 || sim->time_to_sleep < 60)
+	{
+		printf(INVALID_INPUT);
+		return (1);
+	}
+	if (sim->num_meals == -1 || sim->num_philos <= 1 || sim->num_philos > 200)
+	{
+		printf(INVALID_INPUT);
+		return (1);
 	}
 	return (0);
 }
