@@ -6,7 +6,7 @@
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 11:00:58 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/02 13:41:23 by glevin           ###   ########.fr       */
+/*   Updated: 2025/01/03 10:50:06 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ int	main(int ac, char **av)
 		return (4);
 	if (f_create_threads(&sim))
 	{
-		f_destroy_forks(&sim);
-		free(sim.philos);
+		f_cleanup(&sim);
 		return (5);
 	}
-	f_destroy_forks(&sim);
-	free(sim.philos);
+	f_cleanup(&sim);
 	return (0);
 }

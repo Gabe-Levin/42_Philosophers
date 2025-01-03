@@ -6,7 +6,7 @@
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 10:55:15 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/02 17:41:44 by glevin           ###   ########.fr       */
+/*   Updated: 2025/01/03 10:49:49 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void				f_destroy_threads(t_sim *sim);
 int					f_validate_input(t_sim *sim);
 void				f_take_forks(t_philo *philo);
 void				f_release_forks(t_philo *philo);
+void				f_cleanup(t_sim *sim);
 
 #endif

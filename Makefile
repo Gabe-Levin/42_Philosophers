@@ -13,8 +13,8 @@ SRCS		= $(SRC_DIR)main.c \
 			  $(SRC_DIR)f_init_sim.c \
 			  $(SRC_DIR)f_init_forks.c \
 			  $(SRC_DIR)f_init_philos.c \
-			  $(SRC_DIR)f_destroy_forks.c \
-			  $(SRC_DIR)f_create_threads.c \
+			  $(SRC_DIR)f_cleanup.c \
+			  $(SRC_DIR)f_create_threads.c\
 			  $(SRC_DIR)f_monitor_philos.c\
 			  $(SRC_DIR)f_philo_routine.c\
 			  $(SRC_DIR)f_print_status.c\
