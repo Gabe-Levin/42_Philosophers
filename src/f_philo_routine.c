@@ -6,7 +6,7 @@
 /*   By: glevin <glevin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 15:12:25 by glevin            #+#    #+#             */
-/*   Updated: 2025/01/02 17:33:46 by glevin           ###   ########.fr       */
+/*   Updated: 2025/01/03 10:13:10 by glevin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,33 @@ static void	f_eat(t_philo *philo);
 static void	f_sleep(t_philo *philo);
 static void	f_think(t_philo *philo);
 
-void	*f_philo_routine(void *arg)
+void    *f_philo_routine(void *arg)
 {
-	t_philo	*philo;
+    t_philo    *philo;
+    bool       should_continue;
 
-	philo = (t_philo *)arg;
-	philo->last_meal_time = f_get_time();
-	if (philo->id % 2 == 0)
-		usleep(100);
-	pthread_mutex_lock(philo->sim->stop_mutex);
-	while (!philo->sim->stop)
-	{
-		pthread_mutex_unlock(philo->sim->stop_mutex);
-		f_take_forks(philo);
-		f_eat(philo);
-		f_release_forks(philo);
-		f_sleep(philo);
-		f_think(philo);
-	}
-	pthread_mutex_unlock(philo->sim->stop_mutex);
-	return (NULL);
+    philo = (t_philo *)arg;
+    philo->last_meal_time = f_get_time();
+    if (philo->id % 2 == 0)
+        usleep(100);
+    
+    should_continue = true;
+    while (should_continue)
+    {
+        pthread_mutex_lock(philo->sim->stop_mutex);
+        should_continue = !philo->sim->stop;
+        pthread_mutex_unlock(philo->sim->stop_mutex);
+        
+        if (should_continue)
+        {
+            f_take_forks(philo);
+            f_eat(philo);
+            f_release_forks(philo);
+            f_sleep(philo);
+            f_think(philo);
+        }
+    }
+    return (NULL);
 }
 
 static void	f_eat(t_philo *philo)
